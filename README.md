@@ -25,7 +25,9 @@ PASSWORD改成自己要的密碼，
 如果是Ampere的GPU(30系、40系、A6000)要指定顯卡數量，count: 2(取決於顯卡數量)  
 如果是非Ampere的GPU(titan)指定all就行，count: all
 
-連接時輸入以下指令
+連接時輸入以下指令  
+可登入root  
+密碼為先前設定的值
 ```shell=
 $ ssh -p ${port1} root@${ip}
 ```
@@ -35,7 +37,9 @@ example :
 ```shell=
 $ nohup text-generation-launcher --model-id /data/MediaTek-Research/Breeze-7B-Instruct-v0_1 --trust-remote-code --dtype float16 --max-input-length 16383 --max-total-tokens 16384 --max-batch-prefill-tokens 16384&
 ```
-服務會開在port2
+服務會開在port2  
+如果要關掉可透過ps -ef查看所有與TGI相關的進程  
+然後透過kill -9 ${pid}關閉
 
 ## run TGI service
 直接開啟服務，沒有ssh登入  
