@@ -5,7 +5,7 @@ text-generation-inference的使用環境，
 版本可自行進行替換
 ```shell=
 $ cd TGI_ssh
-$ docker build -t TGI_ssh:1.4 .
+$ docker build -t tgi_ssh:1.4 .
 ```
 ## model volume
 預設放在./data資料夾
