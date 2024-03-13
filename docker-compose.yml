@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  tgi_ssh:
+    image: tgi_ssh:1.4
+    ports:
+      - "8080:80"
+      - "8081:22"
+    environment:
+      - PASSWORD=PASSWORD
+    volumes:
+      - ./data:/data
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 2
+              capabilities: [gpu]
+    security_opt:
+      - seccomp:unconfined
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
