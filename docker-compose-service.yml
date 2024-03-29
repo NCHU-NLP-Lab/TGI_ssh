@@ -9,10 +9,10 @@ services:
     command: |
       --model-id /data/MediaTek-Research/Breeze-7B-Instruct-v0_1
       --trust-remote-code
-      --dtype float16
-      --max-input-length 16383
-      --max-total-tokens 16384
-      --max-batch-prefill-tokens 16384
+      --dtype bfloat16
+      --max-input-length 8191
+      --max-total-tokens 8192
+      --max-batch-prefill-tokens 8192
     deploy:
       resources:
         reservations:
