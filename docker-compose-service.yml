@@ -25,3 +25,9 @@ services:
     security_opt:
       - seccomp:unconfined
     restart: unless-stopped
+    networks:
+      - TGI_network
+
+networks:
+  TGI_network:
+
