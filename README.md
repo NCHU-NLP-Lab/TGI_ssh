@@ -9,7 +9,7 @@ $ docker build -t tgi_ssh:1.4 .
 ```
 ## model volume
 預設放在./data資料夾  
-會綁訂到container中的/data  
+會綁定到container中的/data  
 模型直接丟進去就行
 
 ## run ssh TGI
