@@ -22,8 +22,26 @@ docker-compose-ssh.yml中
 "port2:80"是服務的port，  
 PASSWORD改成自己要的密碼，
 
-如果是Ampere的GPU(30系、40系、A6000)要指定顯卡數量，count: 2(取決於顯卡數量)  
-如果是非Ampere的GPU(titan)指定all就行，count: all
+如果是Ampere的GPU(30系、40系、A6000)要指定顯卡id或數量
+```shell=
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids:
+                - "0"
+                - "1"
+```
+如果是非Ampere的GPU(titan)要指定all就行，而且dtype只能是float16
+```shell=
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+```
 
 連接時輸入以下指令  
 可登入root  
@@ -35,7 +53,7 @@ $ ssh -p ${port1} root@${ip}
 開啟服務方式參考 [TGI](https://huggingface.co/docs/text-generation-inference/basic_tutorials/using_cli)  
 example : 
 ```shell=
-$ nohup text-generation-launcher --model-id /data/MediaTek-Research/Breeze-7B-Instruct-v0_1 --trust-remote-code --dtype float16 --max-input-length 16383 --max-total-tokens 16384 --max-batch-prefill-tokens 16384&
+$ nohup text-generation-launcher --model-id /data/MediaTek-Research/Breeze-7B-Instruct-v0_1 --trust-remote-code --dtype bfloat16 --max-input-length 8191 --max-total-tokens 8192 --max-batch-prefill-tokens 8192&
 ```
 服務會開在port2  
 如果要關掉可透過ps -ef查看所有與TGI相關的進程  
@@ -46,8 +64,26 @@ $ nohup text-generation-launcher --model-id /data/MediaTek-Research/Breeze-7B-In
 
 docker-compose-service.yml中  
 model-id可設定huggingface的model-id或直接用local模型  
-如果是Ampere的GPU(30系、40系、A6000)要指定顯卡數量，count: 2(取決於顯卡數量)  
-如果是非Ampere的GPU(titan)指定all就行，count: all  
+如果是Ampere的GPU(30系、40系、A6000)要指定顯卡id或數量
+```shell=
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids:
+                - "0"
+                - "1"
+```
+如果是非Ampere的GPU(titan)要指定all就行，而且dtype只能是float16
+```shell=
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+```
 ```shell=
 $ cd TGI_ssh
 $ docker-compose -f docker-compose-service.yml up -d
