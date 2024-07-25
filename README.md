@@ -53,7 +53,7 @@ $ ssh -p ${port1} root@${ip}
 開啟服務方式參考 [TGI](https://huggingface.co/docs/text-generation-inference/basic_tutorials/using_cli)  
 example : 
 ```shell=
-$ nohup text-generation-launcher --model-id /data/MediaTek-Research/Breeze-7B-Instruct-v0_1 --trust-remote-code --dtype bfloat16 --max-input-length 8191 --max-total-tokens 8192 --max-batch-prefill-tokens 8192&
+$ nohup text-generation-launcher --model-id /data/MediaTek-Research/Breeze-7B-Instruct-v0_1 --trust-remote-code --dtype bfloat16 --max-input-length 8191 --max-total-tokens 8192 --max-batch-prefill-tokens 8192 &> /dev/null&
 ```
 服務會開在port2  
 如果要關掉可透過ps -ef查看所有與TGI相關的進程  
