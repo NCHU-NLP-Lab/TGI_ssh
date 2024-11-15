@@ -9,9 +9,9 @@ RUN conda install -y openssh
 
 # Create the /etc/ssh directory and configure SSH server settings
 RUN mkdir -p /etc/ssh && \
-    echo "Port 22" >> /etc/ssh/sshd_config && \
-    echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config && \
-    echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+    echo "Port 22" >> /opt/conda/etc/sshd_config && \
+    echo "PasswordAuthentication yes" >> /opt/conda/etc/sshd_config && \
+    echo "PermitRootLogin yes" >> /opt/conda/etc/sshd_config
 
 # Add the sshd privilege separation user
 RUN useradd -r -s /usr/sbin/nologin sshd
