@@ -1,11 +1,17 @@
+#!/bin/bash
+
 FLAG_FILE="/first_run_flag"
 
+# Set the root password if it's the first run
 if [ ! -f "$FLAG_FILE" ]; then
-    echo root:$PASSWORD | chpasswd;
-    echo 'export $(cat /proc/1/environ | tr "\\0" "\\n" | xargs)' >> /etc/profile
-    touch "$FLAG_FILE";
+    echo root:$PASSWORD | chpasswd
+    touch "$FLAG_FILE"
 else
-    echo "already run";
+    echo "already run"
 fi
 
-service ssh start
+# Ensure SSH host keys are generated
+ssh-keygen -A
+
+# Start SSH service using the correct configuration file
+exec /opt/conda/bin/sshd -f /opt/conda/etc/sshd_config -D
