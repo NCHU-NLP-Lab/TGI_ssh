@@ -53,11 +53,24 @@ $ ssh -p ${port1} root@${ip}
 開啟服務方式參考 [TGI](https://huggingface.co/docs/text-generation-inference/basic_tutorials/using_cli)  
 example : 
 ```shell=
-$ nohup text-generation-launcher --model-id /data/MediaTek-Research/Breeze-7B-Instruct-v0_1 --trust-remote-code --dtype bfloat16 --max-input-length 8191 --max-total-tokens 8192 --max-batch-prefill-tokens 8192 &> /dev/null&
+$ cd ~
+$ nohup text-generation-launcher --model-id /data/meta-llama/Llama-3.2-1B --trust-remote-code --dtype bfloat16 --max-input-length 8191 --max-total-tokens 8192 --max-batch-prefill-tokens 8192 > tgi.log 2>&1 &
 ```
 服務會開在port2  
 如果要關掉可透過ps -ef查看所有與TGI相關的進程  
 然後透過kill -9 ${pid}關閉
+
+## 使用範例
+
+```shell=
+$ curl 127.0.0.1:3000/generate \
+    -X POST \
+    -d '{"inputs": "Hello, my name is", "parameters": {"max_new_tokens": 10}}' \
+    -H 'Content-Type: application/json'
+```
+
+把 `127.0.0.1:3000` 換成對外的 ip+port 即可
+
 
 ## run TGI service
 直接開啟服務，沒有ssh登入  
