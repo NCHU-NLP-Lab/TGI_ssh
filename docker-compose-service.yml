@@ -1,9 +1,9 @@
 version: '3.8'
 services:
   llm_TGI:
-    image: ghcr.io/huggingface/text-generation-inference:1.4
+    image: ghcr.io/huggingface/text-generation-inference:2.4.0
     ports:
-      - "8080:80"
+      - "8080:3000"
     volumes:
       - ./data:/data
     command: |

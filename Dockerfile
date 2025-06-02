@@ -1,5 +1,18 @@
 FROM ghcr.io/huggingface/text-generation-inference:2.4.0
 
+
+RUN conda install -y cuda-toolkit=12.4
+
+
+RUN echo 'export LD_LIBRARY_PATH=/opt/conda/lib:$LD_LIBRARY_PATH' >> /etc/profile.d/tgi_env.sh && \
+    echo 'export PATH=$PATH:/usr/local/bin' >> /etc/profile.d/tgi_env.sh && \
+    echo 'export CUDA_HOME=/opt/conda' >> /etc/profile.d/tgi_env.sh && \
+    chmod +x /etc/profile.d/tgi_env.sh
+
+
+RUN /opt/conda/bin/pip install flash_attn --no-build-isolation --extra-index-url https://download.pytorch.org/whl/cu121
+
+
 # Copy entrypoint script and set permissions
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
@@ -23,6 +36,7 @@ RUN mkdir -p /var/empty && \
 
 # Expose SSH port
 EXPOSE 22
+EXPOSE 3000
 
 # Set default password environment variable
 ENV PASSWORD="PASSWORD"

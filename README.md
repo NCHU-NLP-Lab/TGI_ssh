@@ -19,7 +19,7 @@ $ docker-compose -f docker-compose-ssh.yml up -d
 ```
 docker-compose-ssh.yml中  
 "port1:22"是ssh的port，  
-"port2:80"是服務的port，  
+"port2:3000"是服務的port，  
 PASSWORD改成自己要的密碼，
 
 如果是Ampere的GPU(30系、40系、A6000)要指定顯卡id或數量
