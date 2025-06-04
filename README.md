@@ -40,8 +40,9 @@ cd TGI_ssh
 docker-compose -f docker-compose-ssh.yml up -d
 ```
 `docker-compose-ssh.yml` 中  
-`port1:22` 是 ssh 的 port，  
-`port2:80` 是服務的 port，  
+- `port1:22` 是 ssh 的 port  
+- `port2:80` 是服務的 port  
+
 PASSWORD 改成自己要的密碼
 
 ---
