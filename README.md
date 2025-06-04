@@ -25,7 +25,7 @@ docker-compose-ssh.yml 中
 PASSWORD 改成自己要的密碼，
 
 如果是 Ampere 的 GPU (30系、40系、A6000) 要指定顯卡 id 或數量
-```shell=
+```yaml
     deploy:
       resources:
         reservations:
@@ -36,7 +36,7 @@ PASSWORD 改成自己要的密碼，
                 - "1"
 ```
 如果是非 Ampere 的 GPU (titan) 要指定 all 就行，而且 dtype 只能是 float16
-```shell=
+```yaml
     deploy:
       resources:
         reservations:
@@ -48,8 +48,8 @@ PASSWORD 改成自己要的密碼，
 連接時輸入以下指令  
 可登入 root  
 密碼為先前設定的值
-```shell=
-$ ssh -p ${port1} root@${ip}
+```bash
+ssh -p ${port1} root@${ip}
 ```
 
 開啟服務方式參考 [TGI](https://huggingface.co/docs/text-generation-inference/basic_tutorials/using_cli)  
@@ -64,8 +64,8 @@ nohup text-generation-launcher --model-id /data/meta-llama/Llama-3.2-1B --trust-
 
 ## 使用範例
 
-```shell=
-$ curl 127.0.0.1:80/generate \
+```bash
+curl 127.0.0.1:80/generate \
     -X POST \
     -d '{"inputs": "Hello, my name is", "parameters": {"max_new_tokens": 10}}' \
     -H 'Content-Type: application/json'
@@ -79,7 +79,7 @@ $ curl 127.0.0.1:80/generate \
 docker-compose-service.yml 中  
 model-id 可設定 huggingface 的 model-id 或直接用 local 模型  
 如果是 Ampere 的 GPU (30系、40系、A6000) 要指定顯卡 id 或數量
-```shell=
+```yaml
     deploy:
       resources:
         reservations:
@@ -90,7 +90,7 @@ model-id 可設定 huggingface 的 model-id 或直接用 local 模型
                 - "1"
 ```
 如果是非 Ampere 的 GPU (titan) 要指定 all 就行，而且 dtype 只能是 float16
-```shell=
+```yaml
     deploy:
       resources:
         reservations:
@@ -98,7 +98,7 @@ model-id 可設定 huggingface 的 model-id 或直接用 local 模型
             - driver: nvidia
               count: all
 ```
-```shell=
-$ cd TGI_ssh
-$ docker-compose -f docker-compose-service.yml up -d
+```bash
+cd TGI_ssh
+docker-compose -f docker-compose-service.yml up -d
 ```
