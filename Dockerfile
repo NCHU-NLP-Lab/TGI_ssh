@@ -20,5 +20,4 @@ ENV PASSWORD="PASSWORD"
 WORKDIR /root
 
 # Set the entrypoint to the script
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["/bin/bash"]
+ENTRYPOINT /entrypoint.sh && /bin/bash
