@@ -1,0 +1,5 @@
+# 忽略 data 資料夾下所有內容
+data/*
+
+# 但不要忽略 data/README.md
+!data/README.md
