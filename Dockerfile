@@ -24,5 +24,4 @@ EXPOSE 80
 ENV PASSWORD="PASSWORD"
 ENV LD_LIBRARY_PATH="/usr/local/nvidia/lib:/usr/local/nvidia/lib64:/root/.local/share/uv/python/cpython-3.11.11-linux-x86_64-gnu/lib/"
 
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["/bin/bash"]
+ENTRYPOINT /entrypoint.sh && /bin/bash
