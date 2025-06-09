@@ -6,9 +6,8 @@ RUN apt update && \
     echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config && \
     echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 
-
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN chmod 777 /entrypoint.sh
 
 RUN VENV_ACTIVATE_PATH="/usr/src/.venv/bin/activate" && \
     if [ -f "$VENV_ACTIVATE_PATH" ]; then \
@@ -24,5 +23,4 @@ WORKDIR /root
 EXPOSE 22
 EXPOSE 80
 
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["/bin/bash"]
+ENTRYPOINT /entrypoint.sh && /bin/bash
