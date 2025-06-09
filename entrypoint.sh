@@ -1,9 +1,11 @@
-if [[ -n "$PASSWORD" ]]; then
-    echo "Setting root password..."
-    echo "root:$PASSWORD" | chpasswd
+FLAG_FILE="/first_run_flag"
+
+if [ ! -f "$FLAG_FILE" ]; then
+    echo root:$PASSWORD | chpasswd;
+    echo 'export $(cat /proc/1/environ | tr "\\0" "\\n" | xargs)' >> /etc/profile
+    touch "$FLAG_FILE";
 else
-    echo "Warning: PASSWORD not set"
+    echo "already run";
 fi
 
 service ssh start
-exec /bin/bash
