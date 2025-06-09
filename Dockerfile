@@ -7,7 +7,7 @@ RUN apt update && \
     echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod 777 /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 RUN VENV_ACTIVATE_PATH="/usr/src/.venv/bin/activate" && \
     if [ -f "$VENV_ACTIVATE_PATH" ]; then \
@@ -16,11 +16,13 @@ RUN VENV_ACTIVATE_PATH="/usr/src/.venv/bin/activate" && \
         echo "Warning: Virtual environment activation script not found at $VENV_ACTIVATE_PATH"; \
     fi
 
-ENV LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64:/root/.local/share/uv/python/cpython-3.11.11-linux-x86_64-gnu/lib/
-
 WORKDIR /root
 
 EXPOSE 22
 EXPOSE 80
 
-ENTRYPOINT /entrypoint.sh && /bin/bash
+ENV PASSWORD="PASSWORD"
+ENV LD_LIBRARY_PATH="/usr/local/nvidia/lib:/usr/local/nvidia/lib64:/root/.local/share/uv/python/cpython-3.11.11-linux-x86_64-gnu/lib/"
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/bin/bash"]
