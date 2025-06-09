@@ -33,4 +33,4 @@ EXPOSE 80
 
 # Define the command that will run when the container starts
 # This will start the SSH service and then run a bash shell
-CMD service ssh start && /bin/bash
+ENTRYPOINT ["/bin/bash", "-c", "service ssh start && /bin/bash"]
