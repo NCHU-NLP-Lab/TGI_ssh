@@ -27,6 +27,7 @@ sudo mkdir -p /data/models
 sudo chown -R $USER:$USER /data/models
 
 # 建立軟連結，讓本地的 ./models 指向 /data/models
+rm -rf models/
 ln -s /data/models ./models
 ```
 
