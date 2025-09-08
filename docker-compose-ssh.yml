@@ -8,16 +8,15 @@ services:
       - "8081:22"
     environment:
       - PASSWORD=PASSWORD
+      - NVIDIA_VISIBLE_DEVICES=all
     volumes:
-      - ./data:/data
+      - ./models:/models
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
-              device_ids:
-                - "0"
-                - "1"
+              count: all
               capabilities: [gpu]
     security_opt:
       - seccomp:unconfined

@@ -5,14 +5,16 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./data:/data
+      - ./models:/models
     command: |
-      --model-id /data/MediaTek-Research/Breeze-7B-Instruct-v0_1
+      --model-id /models/MediaTek-Research/Breeze-7B-Instruct-v0_1
       --trust-remote-code
       --dtype bfloat16
       --max-input-length 8191
       --max-total-tokens 8192
       --max-batch-prefill-tokens 8192
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
     deploy:
       resources:
         reservations:
@@ -30,4 +32,3 @@ services:
 
 networks:
   TGI_network:
-
