@@ -81,13 +81,20 @@ ssh -p ${port1} root@${ip}
 開啟服務方式參考 [TGI](https://huggingface.co/docs/text-generation-inference/basic_tutorials/using_cli)  
 example : 
 ```bash
-nohup text-generation-launcher --model-id /models/meta-llama/Llama-3.2-1B --trust-remote-code --dtype bfloat16 --max-input-length 8191 --max-total-tokens 8192 --max-batch-prefill-tokens 8192 > tgi.log 2>&1 &
+nohup text-generation-launcher \
+  --model-id /models/meta-llama/Llama-3.2-1B \
+  --trust-remote-code \
+  --dtype bfloat16 \
+  --max-input-length 8191 \
+  --max-total-tokens 8192 \
+  --max-batch-prefill-tokens 8192 \
+  > ~/tgi.log 2>&1 &
 ```
-將 `/models/meta-llama/Llama-3.2-1B` 換成自己的模型路徑  
-`--dtype` 如果是非 Ampere 的 GPU (Titan) 必須指定 `float16`  
-服務會開在 port2  
-如果要關掉可透過 ps -ef 查看所有與 TGI 相關的 process  
-然後透過 kill -9 ${pid} 關閉
+- 將 `/models/meta-llama/Llama-3.2-1B` 換成自己的模型路徑  
+- `--dtype` 如果是非 Ampere 的 GPU (Titan) 必須指定 `float16`  
+- 服務會開在 port2  
+- 如果要關掉可透過 ps -ef 查看所有與 TGI 相關的 process，然後透過 kill -9 ${pid} 關閉  
+- `log` 會存在 `~/tgi.log`
 
 
 ## 使用 TGI 服務
