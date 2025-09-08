@@ -16,6 +16,23 @@ Dockerfile*
 ```
 因為 Server 裡面可能會因為各種不同人或不同的服務要用而有一堆 docker-compose-ssh-xxx.yml 和 docker-compose-service-xxx.yml，這樣可以讓本地的 git 忽略掉這些檔案，避免不必要的衝突。
 
+## 雙硬碟配置 (可選)
+如果伺服器中有兩顆硬碟，且已將容量較大的硬碟掛載在 `/data` 目錄，則： 
+
+```bash
+# 在較大的硬碟上建立 models 目錄
+sudo mkdir -p /data/models
+
+# 設定目錄權限
+sudo chown -R $USER:$USER /data/models
+
+# 建立軟連結，讓本地的 ./models 指向 /data/models
+ln -s /data/models ./models
+```
+
+這樣可以將 models 存在較大的硬碟上 
+
+
 ## Build Image
 ```bash
 cd TGI_ssh
@@ -32,22 +49,6 @@ cd /models
 huggingface-cli download meta-llama/Llama-3.2-1B --local-dir meta-llama/Llama-3.2-1B  
 ```
 其他細節可以參考 [Hugging Face CLI](https://huggingface.co/docs/huggingface_hub/en/guides/cli)
-
-### 雙硬碟配置 (可選)
-如果伺服器中有兩顆硬碟，且已將容量較大的硬碟掛載在 `/data` 目錄，則： 
-
-```bash
-# 在較大的硬碟上建立 models 目錄
-sudo mkdir -p /data/models
-
-# 設定目錄權限
-sudo chown -R $USER:$USER /data/models
-
-# 建立軟連結，讓本地的 ./models 指向 /data/models
-ln -s /data/models ./models
-```
-
-這樣可以將 models 存在較大的硬碟上 
 
 ## Docker Compose
 使用 docker-compose 來啟動 TGI 服務，後續就可以透過 ssh 登入 container 了
